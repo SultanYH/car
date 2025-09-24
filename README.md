@@ -200,6 +200,7 @@
 
 .specs-list li {
   background: #4d4949;/* لون خلفية المواصفات */
+  text-align: center;
   padding: 12px 15px;
   border-radius: 8px;
   border: 1px solid #eee;/* حدود خفيفة */
