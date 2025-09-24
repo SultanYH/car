@@ -382,9 +382,9 @@ body {
       <li> <span>المحرك</span> 4.0 لتر  v8 توين تيربو</li>
       <li> <span>القوة</span>  671 HP </li>
       <li>  <span>ناقل الحركة</span> بثماني سرعات أوتوماتيك </li>
-      <li> <span>التسارع</span>  0-100 كم/س في 3.6 ثانية </li>
-      <li><span>سعة الخزان</span> 50 لتر </li>
-      <li> <span>نظام الأمان</span>ABS, EBD, Airbags</li>
+      <li> <span> التسارع </span>  0-100 كم/س في 3.6 ثانية </li>
+      <li> <span> سعة الخزان </span> 50 لتر </li>
+      <li>  ABS, EBD, Airbags <span> نظام الأمان</span> </li>
     </ul>
   </div>
 
