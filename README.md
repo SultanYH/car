@@ -1,0 +1,562 @@
+<html lang="ar">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sultan project</title>
+<style>
+  :root{
+    --bg:#0b0b0c;
+    --card:#000000;
+    --accent:#ff6600;
+    --overlay-bg: rgba(49, 47, 47, 0.85);/* الخلفيه للصوره بعد الضغط */
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background:linear-gradient(180deg,#000000 0%, #000000 100%);
+    color:var(--accent);
+    min-height:100vh;
+    padding:28px;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1{margin:0 0 18px 0; font-size:20px; text-align:center}
+
+  /* gallery grid */
+  .gallery{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap:12px;
+    max-width:1000px;
+    margin:0 auto;
+  }
+  .thumb{
+    background:var(--card);
+    border-radius:8px;
+    overflow:hidden;
+    cursor:pointer;
+    display:block;
+    position:relative;
+    padding:6px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .thumb:hover{ transform:translateY(-6px); box-shadow:0 6px 24px rgba(255, 102, 0, 0.6) } /* hover effect card */
+  .thumb img {
+    width:100%;
+    height:120px;
+    object-fit:cover;
+    display:block;
+    border-radius:6px;
+  }
+  .thumb .caption{
+    font-size:13px;
+    margin-top:8px;
+    color:#cfe3ff;
+    text-align:center;
+  }
+
+  /* overlay / lightbox */
+  .overlay{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:var(--overlay-bg);
+    z-index:9999;
+    padding:20px;
+  }
+  .overlay.open{ display:flex; }
+  .viewer{
+    max-width:1100px;
+    width:100%;
+    max-height:92vh;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .viewer img{
+    max-width:100%;
+    max-height:92vh;
+    border-radius:8px;
+    box-shadow:0 20px 50px rgba(255, 94, 0, 0.952);
+  }
+
+  /* controls */
+  .close-btn{
+    position:fixed;
+    top:18px;
+    right:18px;
+    background:rgba(255, 255, 255, 0.45);
+    border:1px solid rgb(0, 0, 0);
+    color:var(--accent);
+    padding:8px 10px;
+    border-radius:8px;
+    cursor:pointer;
+    z-index:10010;
+    font-size:16px;
+  }
+  .nav-btn{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(0,0,0,0.35);
+    border:none;
+    color:var(--accent);
+    font-size:28px;
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    user-select:none;
+  }
+  .nav-btn:active{ transform:translateY(-50%) scale(.98) }
+  .nav-left{ left:-70px }
+  .nav-right{ right:-70px }
+
+  /* responsive adjustments for small screens */
+  @media (max-width:700px){
+    .thumb img{ height:100px }
+    .nav-left{ left:6px }
+    .nav-right{ right:6px }
+    .nav-btn{ width:44px; height:44px; font-size:22px; }
+    .close-btn{ top:12px; right:12px; padding:6px 8px; }
+  }
+
+  /* caption under large image */
+  .large-caption{
+    margin-top:10px;
+    text-align:center;
+    color:#e6f0ff;
+    font-size:15px;
+  }
+  .logo {
+      width: 520px;   /* غيّر الرقم للتحكم بالقياس */
+      height: auto; }
+
+      
+      
+
+  /* css لقاىمة المواصفات */
+  body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: #000;/* لون الخلفية */
+  margin: 0;
+  padding: 20px;
+  color: #ff7300;/* لون النص الرئيسي */
+}
+
+.car-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #7a7575; /* لون خلفية القاىمة */
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+.car-header {
+  background: #000000;
+  color: #ff7b00;/* لون النص */
+  padding: 20px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.car-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+.specs-section {
+  padding: 20px;
+}
+
+.specs-section h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #ff7b00;/* لون العنوان */
+  /*border-bottom: 2px solid #000000;*/
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.specs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.specs-list li {
+  background: #4d4949;/* لون خلفية المواصفات */
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #eee;/* حدود خفيفة */
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);/* ظل خفيف */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.specs-list li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.specs-list li span:first-child {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #000;
+}
+
+.specs-list li span:last-child {
+  color: #000000;/* لون الوصف */
+}
+
+.car-description {
+  padding: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #000000;/* لون النص */
+}
+
+.email {
+  text-align: center;
+  font-size: 15px;
+  color: chocolate;/* لون البريد الإلكتروني */
+  margin: 15px 0 25px 0;
+  font-weight: bold;
+}
+
+@media(max-width: 700px) {
+  .specs-list {
+    grid-template-columns: 1fr; /* عمود واحد في الهاتف */
+  }
+}
+
+    /* للتواصل */
+
+    .footer {
+  background-color: #000000;
+  color: #fff;
+  padding: 40px 20px 20px;
+  margin-top: 40px;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.footer-item h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #ff6600;
+}
+
+.footer-item p,
+.footer-item a {
+  font-size: 15px;
+  color: #ccc;/* لون النص */
+  text-decoration: none;
+}
+
+.footer-item a:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid #333;
+  margin-top: 25px;
+  padding-top: 15px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.watermark {
+  position:fixed;
+  bottom: 5px;
+  right: 5px;
+  opacity: 0.1;         
+  z-index: 9999;
+}       
+
+
+/*.watermark img {
+  width: 100px;       
+  height: auto;
+  pointer-events: none;
+  
+}
+   /* يمنع الضغط أو التحديد */
+
+body {
+  -webkit-user-select: none; /* يمنع النسخ */
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 100%;
+  
+
+}
+
+
+
+
+</style>
+</head>
+<body>
+
+   
+
+  <h1><img src="sultanlogo11.png" alt="logo" 
+         class="logo"></h1>
+
+        
+  <div class="gallery" id="gallery">
+    <!-- عدّل المسارات أو استبدل الصور برابط خارجي أو محلي -->
+    <a class="thumb" data-index="0" >
+      <img src="car2.jpg.avif" alt="صورة 1">
+      <div class="caption"></div>
+    </a>
+
+    <a class="thumb" data-index="1" >
+      <img src="car1.jpg.avif" alt="صورة 2">
+      <div class="caption"></div>
+    </a>
+
+    <a class="thumb" data-index="1" >
+      <img src="img5.webp" alt="صورة 2">
+      <div class="caption"></div>
+    </a>
+
+
+    <a class="thumb" data-index="1" >
+      <img src="img7.avif" alt="صورة 2">
+      <div class="caption"></div>
+    </a>
+
+    <a class="thumb" data-index="2" >
+      <img src="car3.jpg" alt="صورة 3">
+      <div class="caption"></div>
+    </a>
+
+    <a class="thumb" data-index="3">
+      <img src="car4.jpg" alt="صورة 4">
+      <div class="caption"></div>
+    </a>
+  </div>
+<!--قاىمة المواصفات-->
+  <div class="car-container">
+  <div class="car-header">2025 Aston Martin DB12 v12</div>
+
+  <div class="specs-section">
+   <center><h2>مواصفات السيارة</h2></center> 
+    <ul class="specs-list">
+      <li>4.0 لتر  v8 توين تيربو <span>المحرك</span></li>
+      <li> 671 HP <span>القوة</span></li>
+      <li> بثماني سرعات أوتوماتيك <span>ناقل الحركة</span></li>
+      <li> 0-100 كم/س في 3.6 ثانية <span>التسارع</span></li>
+    
+      <li> 50 لتر <span>سعة الخزان</span></li>
+      <li> ABS, EBD, Airbags<span>نظام الأمان</span></li>
+    </ul>
+  </div>
+
+  <div class="car-description">
+    Although the DB11 made for a lovely cruiser, it never quite had the dynamic aptitude to 
+There's no question that the DB12 is far sportier than its predecessor. Of course, its mighty twin-turbocharged V-8 its sportiness at a considerable detriment to comfort.
+
+Beyond its aggressive personality, the DB12 distinguishes itself from the DB11 with 
+among makers of exotic sports cars more than luxurious grand tourers. 
+Even if the DB12 might be too intense for some drivers, others will delight in the car’s awesome dynamic capabilities—and all will like looking at it even more.
+
+What Engine Is in the Aston Martin DB12?
+Despite what the number in its name might imply, 
+the DB12 does not use a V-12 engine—that’ll be reserved for Aston Martin’sSafety and Driver Assist Features
+The 2025 Aston Martin DB12 comes with a generous number of driver assist and active safety features.
+ Among these are front automatic emergency braking, side and rear cross-traffic alert, 
+How Many Seats in the DB12?
+There are four seats in the DB12, although the back seats are tiny—whoever’s up front will
+ have to be gracious in sliding their seats far forward to provide any legroom to those behind. Additionally,
+ 
+ <p><a href="https://www.google.com/search?gs_ssp=eJzj4tTP1TcwMU02T1JgNGB0YPBiS8_PT89JBQBASQXT&q=google&oq=g&gs_lcrp=EgZjaHJvbWUqEwgCEC4YgwEYxwEYsQMY0QMYgAQyBggAEEUYOTINCAEQABiDARixAxiABDITCAIQLhiDARjHARixAxjRAxiABDINCAMQABiDARixAxiABDIGCAQQRRg8MgYIBRBFGDwyBggGEEUYPDIGCAcQRRg80gEIMjU5NGowajeoAgiwAgHxBdELHFaDJDXa&sourceid=chrome&ie=UTF-8">
+  google </a></p>
+  </div>
+</div>
+
+<!--للتواصل-->
+ <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-item">
+        <h3>📧 البريد الإلكتروني</h3>
+        <p><a href="www.sultanabuhashish0@gmail.com">hashishsultan4@gmail.com</a></p>
+      </div>
+      <div class="footer-item">
+        <h3>📞 الهاتف</h3>
+        <p><a href="tel:+962791234567">+962 797424643</a></p>
+      </div>
+      <div class="footer-item">
+        <h3>📍 عنوان المعرض</h3>
+        <p>عمان - شارع الملك عبدالله الثاني - بجانب جاليريا مول</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2025 معرض السيارات | جميع الحقوق محفوظة
+    </div>
+  </footer>
+
+ <div class="watermark">
+  <img src="Screenshot 2025-09-16 124354.png" alt="شعار الشركة">
+</div>
+
+<script>
+  document.addEventListener("contextmenu", e => e.preventDefault()); 
+</script>
+
+
+
+  <!-- Overlay / lightbox -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="close-btn" id="closeBtn" aria-label="إغلاق">✕</button>
+
+    <div class="viewer" id="viewer">
+      <button class="nav-btn nav-left" id="prevBtn" aria-label="الصورة السابقة"></button>
+
+      <img id="largeImg" src="" alt="صورة مكبرة">
+
+      <button class="nav-btn nav-right" id="nextBtn" aria-label="الصورة التالية"></button>
+    </div>
+
+    <div class="large-caption" id="largeCaption"></div>
+  </div>
+
+<script>
+  (function(){
+    const thumbs = Array.from(document.querySelectorAll('.thumb'));
+    const overlay = document.getElementById('overlay');
+    const largeImg = document.getElementById('largeImg');
+    const largeCaption = document.getElementById('largeCaption');
+    const closeBtn = document.getElementById('closeBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    // Build an array of image sources + captions from the thumbnails
+    const images = thumbs.map(t=>{
+      const img = t.querySelector('img');
+      return {
+        src: img.src,
+        alt: img.alt || '',
+        caption: t.getAttribute('data-caption') || ''
+      };
+    });
+
+    let currentIndex = 0;
+
+    function openAt(index){
+      currentIndex = (index + images.length) % images.length;
+      const it = images[currentIndex];
+      largeImg.src = it.src;
+      largeImg.alt = it.alt;
+      largeCaption.textContent = it.caption;
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+
+      // prevent page scroll when overlay open
+      document.body.style.overflow = 'hidden';
+      // focus for keyboard interaction
+      closeBtn.focus();
+    }
+
+    function closeOverlay(){
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      // clear src to release memory on some browsers
+      // (keeps UX clean)
+      largeImg.src = '';
+    }
+
+    // attach click on thumbnails
+    thumbs.forEach((t, i) => {
+      t.addEventListener('click', (e) => {
+        e.preventDefault();
+        openAt(i);
+      });
+    });
+
+    // navigation
+    prevBtn.addEventListener('click', ()=> openAt(currentIndex - 1));
+    nextBtn.addEventListener('click', ()=> openAt(currentIndex + 1));
+    closeBtn.addEventListener('click', closeOverlay);
+
+    // click on overlay background closes (but not when clicking the image)
+    overlay.addEventListener('click', (e)=>{
+      if(e.target === overlay) closeOverlay();
+    });
+
+    // keyboard controls
+    document.addEventListener('keydown', (e)=>{
+      if(!overlay.classList.contains('open')) return;
+      if(e.key === 'Escape') closeOverlay();
+      if(e.key === 'ArrowLeft') openAt(currentIndex - 1);
+      if(e.key === 'ArrowRight') openAt(currentIndex + 1);
+    });
+
+    // optional: double-click on large image to zoom-in further (native browser zoom)
+    largeImg.addEventListener('dblclick', ()=>{
+      // toggle CSS transform zoom
+      const isZoomed = largeImg.classList.toggle('zoomed');
+      if(isZoomed){
+        largeImg.style.transform = 'scale(1.6)';
+        largeImg.style.cursor = 'zoom-out';
+      } else {
+        largeImg.style.transform = '';
+        largeImg.style.cursor = '';
+      }
+    });
+
+    // small accessibility improvement - trap focus inside overlay (basic)
+    overlay.addEventListener('keydown', (e)=>{
+      if(e.key !== 'Tab' || !overlay.classList.contains('open')) return;
+      const focusables = [closeBtn, prevBtn, nextBtn];
+      const idx = focusables.indexOf(document.activeElement);
+      if(e.shiftKey){
+        // shift+tab
+        if(idx <= 0){ focusables[focusables.length-1].focus(); e.preventDefault(); }
+      } else {
+        // tab
+        if(idx === focusables.length-1){ focusables[0].focus(); e.preventDefault(); }
+      }
+    });
+
+  })();
+</script>
+</body>
+</html>
