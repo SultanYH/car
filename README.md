@@ -379,12 +379,12 @@ body {
   <div class="specs-section">
    <center><h2>مواصفات السيارة</h2></center> 
     <ul class="specs-list">
-      <li>4.0 لتر  v8 توين تيربو <span>المحرك</span></li>
-      <li> 671 HP <span>القوة</span></li>
-      <li> بثماني سرعات أوتوماتيك <span>ناقل الحركة</span></li>
-      <li> 0-100 كم/س في 3.6 ثانية <span>التسارع</span></li>
+      <li> <span>المحرك</span> <br> 4.0 لتر  v8 توين تيربو</li>
+      <li> <span>القوة</span> <br> 671 HP </li>
+      <li>  <span>ناقل الحركة</span> <br> بثماني سرعات أوتوماتيك </li>
+      <li> <span>التسارع</span> <br> 0-100 كم/س في 3.6 ثانية </li>
     
-      <li> 50 لتر <span>سعة الخزان</span></li>
+      <li><span>سعة الخزان</span> <br> 50 لتر </li>
       <li> ABS, EBD, Airbags<span>نظام الأمان</span></li>
     </ul>
   </div>
