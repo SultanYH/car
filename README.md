@@ -378,7 +378,7 @@ body {
   <div class="car-header">2025 Aston Martin DB12 v12</div>
 
   <div class="specs-section">
-   <center><h2>مواصفات السيارة</h2></center> 
+   <center><h2>Car Description</h2></center> 
     <ul class="specs-list">
       <li> <span>المحرك</span> <br> 4.0 لتر  v8 توين تيربو</li>
       <li> <span>القوة</span> <br> 671 HP </li>
