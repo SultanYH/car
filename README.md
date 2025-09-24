@@ -183,8 +183,7 @@
 .specs-section h2 {
   font-size: 20px;
   margin-bottom: 15px;
-  color: #ff7b00;/* لون العنوان */
-  /*border-bottom: 2px solid #000000;*/
+  color: #000000;/* لون العنوان */
   display: inline-block;
   padding-bottom: 5px;
 }
